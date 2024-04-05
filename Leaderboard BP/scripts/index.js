@@ -7,6 +7,7 @@ ChatCommand({
     command: 'leaderboard',
     alias: ['l'],
     callback: (player) => {
+        player.sendMessage('§aOpening LeaderBoard Admin Menu...')
         system.run(() => MainMenu(player))
     }
 })
