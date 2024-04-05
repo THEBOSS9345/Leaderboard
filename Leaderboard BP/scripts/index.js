@@ -1,6 +1,7 @@
 import { world, system, Player } from '@minecraft/server'
 import { ActionFormData, MessageFormData, ModalFormData } from '@minecraft/server-ui'
 import Database from './Database.js'
+import ChatCommand from './ChatHanlder.js';
 
 ChatCommand.create('Leaderboard', 'LeaderBoard Admin Menu', ['leader'], false, false, ((player) => {
     system.run(() => MainMenu(player))
