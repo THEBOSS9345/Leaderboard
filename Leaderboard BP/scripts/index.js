@@ -3,9 +3,13 @@ import { ActionFormData, MessageFormData, ModalFormData } from '@minecraft/serve
 import Database from './Database.js'
 import ChatCommand from './ChatHanlder.js';
 
-ChatCommand.create('Leaderboard', 'LeaderBoard Admin Menu', ['leader'], false, false, ((player) => {
-    system.run(() => MainMenu(player))
-}))
+ChatCommand({
+    command: 'leaderboard',
+    alias: ['l'],
+    callback: (player) => {
+        system.run(() => MainMenu(player))
+    }
+})
 
 function MainMenu(player) {
     new ActionFormData()
