@@ -21,9 +21,9 @@ Run this command on join:
 /tag @s add Admin
 ```
 
-Give yourself paper:
+Give yourself compass:
 ```js
-/give @s paper
+/give @s compass
 ```
 ### Leaderboard 
 ![image](https://github.com/THEBOSS9345/Leaderboard/assets/125090249/ec76586e-5bc8-4a86-a883-f73fd7109c50)

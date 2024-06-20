@@ -1,17 +1,8 @@
 import { world, system, Player } from '@minecraft/server'
-import { ActionFormData, MessageFormData, ModalFormData } from '@minecraft/server-ui'
+import { ActionFormData, ModalFormData } from '@minecraft/server-ui'
 import Database from './Database.js'
-import ChatCommand from './ChatHanlder.js';
 
-ChatCommand({
-    command: 'leaderboard',
-    alias: ['l'],
-    callback: (player) => {
-        if (!player.hasTag('Admin')) return
-        player.sendMessage('§aOpening LeaderBoard Admin Menu...')
-        system.run(() => MainMenu(player))
-    }
-})
+world.afterEvents.itemUse.subscribe(({ itemStack: item, source }) => (item.typeId === 'minecraft:compass' && source.hasTag('Admin')) && MainMenu(source))
 
 function MainMenu(player) {
     new ActionFormData()
@@ -156,3 +147,6 @@ system.runInterval(() => {
         } catch (e) { }
     })
 })
+
+
+console.warn(`§aLeaderBoard Plugin Loaded! ${new Date().toLocaleString()} BY (§9the_boss9345)`)
