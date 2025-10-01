@@ -30,10 +30,10 @@ function MainMenu(player) {
 function CreateLeaderBoard(player) {
     new ModalFormData()
         .title('§aCreate LeaderBoard')
-        .textField('§9ScoreBoard Name', 'Enter ScoreBoard Name Here')
-        .textField('§9LeaderBoard Name', 'Enter LeaderBoard Name Here')
-        .slider('§9LeaderBoard Max Users', 1, 10, 1, 10)
-        .toggle('§cAre you sure you want to create this LeaderBoard and set the Leader location to your current location?', false)
+        .textField('§9ScoreBoard Name', { text: 'Enter ScoreBoard Name Here' })
+        .textField('§9LeaderBoard Name', { text: 'Enter LeaderBoard Name Here' })
+        .slider('§9LeaderBoard Max Users', 1, 10)
+        .toggle('§cAre you sure you want to create this LeaderBoard and set the Leader location to your current location?')
         .show(player).then(({ canceled, formValues: [ScoreBoardName, LeaderBoardName, MaxUsers, Confirm] }) => {
             if (canceled) return;
             if (!Confirm) return player.sendMessage('§cYou must confirm to create this LeaderBoard.')
@@ -94,15 +94,19 @@ function EditLeaderBoard(player) {
         if (canceled) return;
         if (!array[selection]) return MainMenu(player)
         const location = array[selection][1].LeaderLocation
+
         new ModalFormData()
             .title('§aEdit LeaderBoard')
-            .textField('§9ScoreBoard Name', '', array[selection][1].ScoreBoardName)
-            .textField('§9LeaderBoard Name', '', array[selection][0])
-            .slider('§9LeaderBoard Max Users', 1, 10, 1, array[selection][1].MaxUsers)
-            .toggle('§cRefresh Spawn LeaderBoard', false)
-            .toggle('§cAre you sure you want to  set the LeaderBoard to your current location?', false)
-            .show(player).then(({ canceled, formValues: [ScoreBoardName, LeaderBoardName, MaxUsers, Respawn, Confirm] }) => {
-                if (canceled) return;
+            .textField('§9ScoreBoard Name', "", { defaultValue: array[selection][1].ScoreBoardName })
+            .textField('§9LeaderBoard Name', "", { defaultValue: array[selection][0] })
+            .slider('§9LeaderBoard Max Users', 1, 10, { defaultValue: array[selection][1].MaxUsers })
+            .toggle('§cRefresh Spawn LeaderBoard')
+            .toggle('§cAre you sure you want to  set the LeaderBoard to your current location?')
+            .show(player).then((form_res) => {
+                if (form_res.canceled) return;
+
+                const [ScoreBoardName, LeaderBoardName, MaxUsers, Respawn, Confirm] = form_res.formValues;
+
                 const newdata = database[array[selection][0]]
                 if (Respawn) {
                     world.getDimension(location.dimension).getEntitiesAtBlockLocation(location.location).filter(entity => entity.typeId === 'boss:floating_leaderboard').forEach(entity => entity.remove());
